@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import AutoComplete from "./components/AutoComplete";
 
 function App() {
+  const fetchSuggestions = async (query) => {
+    const response = await fetch(`https://dummyjson.com/products/search?q=${query}`
+)
+    if(!response.ok){
+       throw new Error("Network response was not correct")  
+    }
+    const result = await response.json();
+    return result.products;
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="">
+      <h1 className="text-center text-3xl mt-10">Search page</h1>
+      <AutoComplete
+        placeholder={"Enter product"}
+        fetchSuggestions={fetchSuggestions}
+      />
     </div>
   );
 }
-
 export default App;
